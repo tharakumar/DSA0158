@@ -1,39 +1,81 @@
 #include <iostream>
+
 using namespace std;
-class A {
+
+// Base class Shape
+class Shape {
 protected:
-    int a;
+    double area;
+
 public:
-    A(int val) : a(val) {}
-    void showA() {
-        cout << "Value of a: " << a << endl;
+    Shape() : area(0) {}
+
+    // Virtual function to calculate area
+    virtual void calculateArea() = 0;
+
+    // Function to display area
+    void displayArea() {
+        cout << "Area: " << area << endl;
     }
 };
-class B {
+
+// Derived class Rectangle inheriting from Shape
+class Rectangle : virtual public Shape {
 protected:
-    int b;
+    double length;
+    double width;
+
 public:
-    B(int val) : b(val) {}
-    void showB() {
-        cout << "Value of b: " << b << endl;
+    Rectangle(double l, double w) : length(l), width(w) {}
+
+    // Implementation of calculateArea for Rectangle
+    void calculateArea() override {
+        area = length * width;
     }
 };
-class C : public A, public B {
+
+// Derived class Cuboid inheriting from Rectangle and Shape
+class Cuboid : public Rectangle {
 private:
-    int c;
+    double height;
+    double volume;
+
 public:
-    C(int valA, int valB, int valC) : A(valA), B(valB), c(valC) {}
-    void showC() {
-        cout << "Value of c: " << c << endl;
+    Cuboid(double l, double w, double h) : Rectangle(l, w), height(h), volume(0) {}
+
+    // Function to calculate volume of Cuboid
+    void calculateVolume() {
+        volume = length * width * height;
     }
-    void showAll() {
-        showA();
-        showB();
-        showC();
+
+    // Override calculateArea to calculate total surface area of Cuboid
+    void calculateArea() override {
+        // Calculate the area of the cuboid
+        area = 2 * (length * width + width * height + height * length);
+    }
+
+    // Function to display volume
+    void displayVolume() {
+        cout << "Volume: " << volume << endl;
     }
 };
+
 int main() {
-    C objC(100, 200, 300);
-    objC.showAll();
+    double l, w, h;
+
+    cout << "Enter length, width, and height of the cuboid: ";
+    cin >> l >> w >> h;
+
+    Cuboid cuboid(l, w, h);
+
+    // Calculate and display area
+    cuboid.calculateArea();
+    cout << "Total Surface Area of Cuboid:" << endl;
+    cuboid.displayArea();
+
+    // Calculate and display volume
+    cuboid.calculateVolume();
+    cuboid.displayVolume();
+
     return 0;
 }
