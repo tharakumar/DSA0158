@@ -1,6 +1,5 @@
 #include <iostream>
 using namespace std;
-
 class Cube {
 public:
     Cube(int n) {
@@ -9,10 +8,9 @@ public:
         }
     }
 };
-
 int main() {
     int n;
-    cout << "Enter a number: ";
+    cout << "Enter a number:";
     cin >> n;
     Cube c(n);
     return 0;
